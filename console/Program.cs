@@ -22,6 +22,8 @@ namespace console
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_ResourceResolve;
 
+            Activator.CreateInstance(modelType);
+            Console.WriteLine("activator is working");
             new AnotherClass().Create();
         }
 
