@@ -9,9 +9,9 @@ namespace console
 {
     public class AnotherClass
     {
-        public void Create()
+        public object Create()
         {
-            new Class1();
+            return new Class1();
         }
     }
 }
