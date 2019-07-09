@@ -19,27 +19,19 @@ namespace console
                 AssemblyBuilder.DefineDynamicAssembly(dynamicAssemblyName, AssemblyBuilderAccess.Run);
             dynamicModule = dynamicAssembly.DefineDynamicModule("TestLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
 
-
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            AppDomain.CurrentDomain.TypeResolve += CurrentDomain_TypeResolve;
-
+            
+            CreateTypes(AnotherClass.AllClasses);
+            
             if (new AnotherClass().Create() != null)
             {
                 Console.WriteLine("success");
             }
-
         }
 
-        private static Assembly CurrentDomain_TypeResolve(object sender, ResolveEventArgs args)
+        private static void CreateTypes(List<string> types)
         {
-            Console.WriteLine("resolve type");
-            if (args.Name.Contains("TestLib"))
-            {
-                dynamicModule.DefineType("Test.TestLib.Class1", TypeAttributes.Class | TypeAttributes.Public).CreateType();
-                return dynamicAssembly;
-            }
-
-            return null;
+            types.ForEach(t => dynamicModule.DefineType(t, TypeAttributes.Class | TypeAttributes.Public).CreateType());
         }
 
         private static AssemblyBuilder dynamicAssembly;
@@ -50,7 +42,7 @@ namespace console
             Console.WriteLine("resolve assembly");
             if (args.Name.Contains("TestLib"))
             {
-                Console.WriteLine("resolve assembly");
+                Console.WriteLine("resolve assembly: dynamic" + (dynamicAssembly.IsDynamic ? "yes": "no"));
                 return dynamicAssembly;
             }
 

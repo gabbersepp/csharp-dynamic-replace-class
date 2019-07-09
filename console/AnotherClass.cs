@@ -9,6 +9,7 @@ namespace console
 {
     public class AnotherClass
     {
+        public static List<string> AllClasses = new List<string>{ "Test.TestLib." + nameof(Class1) };
         public object Create()
         {
             return new Class1();
