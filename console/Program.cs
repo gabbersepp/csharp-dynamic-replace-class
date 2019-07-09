@@ -18,7 +18,7 @@ namespace console
             dynamicAssembly =
                 AssemblyBuilder.DefineDynamicAssembly(dynamicAssemblyName, AssemblyBuilderAccess.Run);
             var dynamicModule = dynamicAssembly.DefineDynamicModule("TestLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
-            var modelType = dynamicModule.DefineType("Test.TestLib.Class1", TypeAttributes.Class).CreateType();
+            var modelType = dynamicModule.DefineType("Test.TestLib.Class1", TypeAttributes.Class | TypeAttributes.Public).CreateType();
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_ResourceResolve;
 
